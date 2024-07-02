@@ -1,6 +1,8 @@
-#include <iostream>
-#include "GLFW/glfw3.h"
-using namespace std;
+#include "standard.h"
+#include "exlibs.h"
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_impl_opengl3.h"
 
 int main()
 {
