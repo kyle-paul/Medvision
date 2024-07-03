@@ -10,6 +10,9 @@ add_executable(Medvision
     src/main.cpp
     src/controller/app.cpp
     src/renderer/shaders/shader.cpp
+    src/renderer/buffer/VertexArray.cpp
+    src/renderer/buffer/VertexBuffer.cpp
+    src/renderer/buffer/IndexBuffer.cpp
     src/vendor/imgui/imgui_demo.cpp
     src/vendor/imgui/imgui_draw.cpp
     src/vendor/imgui/imgui_impl_glfw.cpp

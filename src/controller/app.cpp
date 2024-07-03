@@ -58,10 +58,12 @@ void App::setup_imgui()
 
 void App::run()
 {
-    bool show_imgui = true;
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
     Shader shader("../resources/glsl/vertex.vert", "../resources/glsl/fragment.frag");
     shader.Bind();
+
+    bool show_imgui = true;
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     while (!glfwWindowShouldClose(window))
     {

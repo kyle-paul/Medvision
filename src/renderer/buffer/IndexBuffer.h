@@ -1,0 +1,20 @@
+#pragma once
+#include "../../exlibs.h"
+#include "../../standard.h"
+
+class IndexBuffer
+{
+public:
+    IndexBuffer(const std::vector<unsigned int> &array);
+    ~IndexBuffer();
+    void Bind() const;
+    void Unbind() const;
+    inline unsigned int GetVertexCount() const
+    {
+        return vertexCount;
+    }
+
+private:
+    unsigned int bufferID;
+    unsigned int vertexCount;
+};
