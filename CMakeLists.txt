@@ -6,8 +6,16 @@ add_subdirectory(dependencies/glm EXCLUDE_FROM_ALL)
 
 # Add the executable
 add_executable(Medvision
-    src/Application.cpp
-    
+    src/glad.c
+    src/main.cpp
+    src/controller/app.cpp
+    src/vendor/imgui/imgui_demo.cpp
+    src/vendor/imgui/imgui_draw.cpp
+    src/vendor/imgui/imgui_impl_glfw.cpp
+    src/vendor/imgui/imgui_impl_opengl3.cpp
+    src/vendor/imgui/imgui_widgets.cpp
+    src/vendor/imgui/imgui_tables.cpp
+    src/vendor/imgui/imgui.cpp
 )
 
 target_include_directories(Medvision PRIVATE dependencies)
