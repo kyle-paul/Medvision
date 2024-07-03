@@ -9,6 +9,7 @@ add_executable(Medvision
     src/glad.c
     src/main.cpp
     src/controller/app.cpp
+    src/renderer/shaders/shader.cpp
     src/vendor/imgui/imgui_demo.cpp
     src/vendor/imgui/imgui_draw.cpp
     src/vendor/imgui/imgui_impl_glfw.cpp
