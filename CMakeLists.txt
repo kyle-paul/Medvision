@@ -7,9 +7,12 @@ add_subdirectory(dependencies/glm EXCLUDE_FROM_ALL)
 # Add the executable
 add_executable(Medvision
     src/glad.c
+    src/vendor/stb_image/stb_image.cpp
     src/main.cpp
     src/controller/app.cpp
     src/renderer/shaders/shader.cpp
+    src/renderer/display/display.cpp
+    src/renderer/texture/texture.cpp
     src/renderer/buffer/VertexArray.cpp
     src/renderer/buffer/VertexBuffer.cpp
     src/renderer/buffer/IndexBuffer.cpp

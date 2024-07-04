@@ -1,3 +1,4 @@
+#pragma once
 #include "../../exlibs.h"
 #include "../../standard.h"
 

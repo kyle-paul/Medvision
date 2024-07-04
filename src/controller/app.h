@@ -1,6 +1,8 @@
 #pragma once
 #include "../exlibs.h"
 #include "../renderer/shaders/shader.h"
+#include "../renderer/display/display.h"
+#include "../renderer/texture/texture.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
@@ -11,6 +13,8 @@ public:
     App();
     ~App();
     void run();
+    void good();
+    void temp();
 
 private:
     GLFWwindow *window;

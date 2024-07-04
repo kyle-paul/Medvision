@@ -4,6 +4,11 @@
 INDEX_BUFFER -> BIND + UNBIND -> DELETE
 */
 
+IndexBuffer::IndexBuffer()
+    : bufferID(0), vertexCount(0)
+{
+}
+
 IndexBuffer::IndexBuffer(const std::vector<unsigned int> &array) : vertexCount(array.size())
 {
     glGenBuffers(1, &bufferID);
