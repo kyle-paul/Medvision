@@ -14,8 +14,8 @@ public:
     {
         return vertexCount;
     }
-
-private:
     unsigned int bufferID;
     unsigned int vertexCount;
+
+private:
 };

@@ -7,15 +7,23 @@ add_subdirectory(dependencies/glm EXCLUDE_FROM_ALL)
 # Add the executable
 add_executable(Medvision
     src/glad.c
+    src/debug/debug.cpp
     src/vendor/stb_image/stb_image.cpp
-    src/main.cpp
     src/controller/app.cpp
+
     src/renderer/shaders/shader.cpp
     src/renderer/display/display.cpp
     src/renderer/texture/texture.cpp
     src/renderer/buffer/VertexArray.cpp
     src/renderer/buffer/VertexBuffer.cpp
     src/renderer/buffer/IndexBuffer.cpp
+
+    src/factory/factory.cpp
+
+    src/components/render_component.cpp
+    src/components/physics_component.cpp
+    src/components/transform_component.cpp
+
     src/vendor/imgui/imgui_demo.cpp
     src/vendor/imgui/imgui_draw.cpp
     src/vendor/imgui/imgui_impl_glfw.cpp
@@ -23,6 +31,8 @@ add_executable(Medvision
     src/vendor/imgui/imgui_widgets.cpp
     src/vendor/imgui/imgui_tables.cpp
     src/vendor/imgui/imgui.cpp
+
+    src/main.cpp
 )
 
 target_include_directories(Medvision PRIVATE dependencies)

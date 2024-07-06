@@ -3,6 +3,7 @@
 #include "../renderer/shaders/shader.h"
 #include "../renderer/display/display.h"
 #include "../renderer/texture/texture.h"
+#include "../factory/factory.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
@@ -13,8 +14,7 @@ public:
     App();
     ~App();
     void run();
-    void good();
-    void temp();
+    void run2();
 
 private:
     GLFWwindow *window;
