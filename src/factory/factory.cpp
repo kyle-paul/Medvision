@@ -32,15 +32,15 @@ std::vector<std::string> Factory::split(const std::string &line,
 }
 
 void Factory::create_mesh(const char *obj_path, const float &scale,
-                          glm::vec3 position, glm::vec3 eulers,
-                          glm::vec3 velocity, glm::vec3 eulerVelocity,
-                          const bool &onTexCoords, const std::string &texture_path)
+                          const bool &onTexCoords, const std::string &texture_path,   // entity properties
+                          glm::vec3 position, glm::vec3 eulers, glm::f32 zoom_factor, // transform properties
+                          glm::vec3 velocity, glm::vec3 eulerVelocity)                // physics properties
 {
 
     TransformComponent transform;
     transform.position = position;
     transform.eulers = eulers;
-    transform.scale = scale;
+    transform.zoom_factor = zoom_factor;
     transform_components[EntityMade] = transform;
 
     PhysicsComponent physics;

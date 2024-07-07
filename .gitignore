@@ -1,1 +1,4 @@
 build/
+*.obj
+*.nii
+*.nii.gz

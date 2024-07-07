@@ -5,6 +5,7 @@ App::App()
     setup_glfw();
     setup_opengl();
     setup_imgui();
+    setup_systems();
 }
 
 void App::setup_glfw()
@@ -32,6 +33,12 @@ void App::setup_glfw()
         std::cout << "Error initializing Glad" << std::endl;
         glfwTerminate();
     }
+
+    // Shader uniform
+    shader = new Shader("../resources/glsl/vertex.vert", "../resources/glsl/fragment.frag");
+    shader->Bind();
+    glm::mat4 projection_matrix = glm::ortho(-4.0f, 4.0f, -3.0f, 3.0f, -1.0f, 1.0f);
+    shader->SetUniformMatrix4fv("projection", projection_matrix);
 }
 
 void App::setup_opengl()
@@ -145,30 +152,31 @@ void App::setup_imgui()
     style.TabRounding = 4;
 }
 
+void App::setup_systems()
+{
+    renderSystem = new RenderSystem(shader, window);
+}
+
 void App::run()
 {
-    // Factory
+    // Factory initialization
     Factory factory(transform_components, physics_components, render_components);
-    std::string brainTexturePath = "../resources/textures/brain2.jpg";
 
-    // Shader uniform
-    Shader shader("../resources/glsl/vertex.vert", "../resources/glsl/fragment.frag");
-    shader.Bind();
-    glm::mat4 projection_matrix = glm::ortho(-4.0f, 4.0f, -3.0f, 3.0f, -1.0f, 1.0f);
-    glm::mat4 view_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-    shader.SetUniformMatrix4fv("view", view_matrix);
+    // Entity configuration
+    std::string obj_path = "../resources/objs/brain/1.obj";
+    std::string brain_texture_path = "../resources/textures/brain2.jpg";
+    glm::vec3 position = {0.0f, 0.0f, 0.0f};
+    glm::vec3 eulers = {45.0f, 45.0f, 45.0f};
+    glm::vec3 velocity = {0.0f, 0.0f, 0.0f};
+    glm::vec3 eulerVelocity = {10.0f, 10.0f, 10.0f};
+    bool onTexCoords = true;
+    float zoom_factor = 1.5f;
 
     // ImGui config
-    glm::vec3 translationA(0.0f, 0.0f, 0.0f);
-    glm::vec3 eulersA(45.0f, 45.0f, 45.0f);
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-    float fovy = 45.0f;
-    float near = 0.1f;
-    float far = 15.f;
     bool show_imgui = true;
     bool show_another_window = true;
     bool enable_transformation = false;
-    bool onTexCoords = true;
     bool mesh_created = false;
 
     // Clear all
@@ -180,26 +188,12 @@ void App::run()
     {
         // Clear Screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        shader.Bind();
+        shader->Bind();
 
         // Start rendering
         if (mesh_created)
         {
-            // glm::mat4 projection_matrix = glm::perspective(fovy, 2200.0f / 1300.0f, near, far);
-            shader.SetUniformMatrix4fv("projection", projection_matrix);
-            glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, translationA);
-            model = glm::rotate(model, glm::radians(eulersA.x), {1.0f, 0.0f, 0.0f});
-            model = glm::rotate(model, glm::radians(eulersA.y), {0.0f, 1.0f, 0.0f});
-            model = glm::rotate(model, glm::radians(eulersA.z), {0.0f, 0.0f, 1.0f});
-            shader.SetUniformMatrix4fv("model", model);
-            for (const auto &[index, render] : render_components)
-            {
-                render.texture->Bind();
-                render.vao->Bind();
-                render.fbo->Bind();
-                glDrawElements(GL_TRIANGLES, render.fbo->GetVertexCount(), GL_UNSIGNED_INT, nullptr);
-            }
+            renderSystem->update(transform_components, render_components);
         }
 
         // Start the Dear ImGui frame
@@ -248,21 +242,17 @@ void App::run()
 
             if (enable_transformation)
             {
-                ImGui::SliderFloat3("Translation A", &translationA.x, -1.0f, 1.0f);
-                ImGui::SliderFloat3("Rotation A", &eulersA.x, 0.0f, 360.f);
-                ImGui::SliderFloat("Fovy", &fovy, -89.0f, 89.0f);
-                ImGui::SliderFloat("Near", &near, -0.001f, 1.0f);
-                ImGui::SliderFloat("Far", &far, 10.f, 50.0f);
+                ImGui::SliderFloat3("Translation", &position.x, -4.0f, 4.0f);
+                ImGui::SliderFloat3("Rotation", &eulers.x, 0.0f, 360.f);
+                ImGui::SliderFloat("Zoom factor", &zoom_factor, 1.0f, 4.0f);
                 ImGui::ColorEdit3("clear color", (float *)&clear_color);
                 ImGui::Checkbox("Turn on texture", &onTexCoords);
             }
 
             if (ImGui::Button("Start reconstruction"))
             {
-                factory.create_mesh("../resources/objs/brain/1.obj", 160.0,
-                                    {3.0f, 0.0f, 0.25f}, {0.0f, 0.0f, 0.0f},
-                                    {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 10.0f},
-                                    onTexCoords, brainTexturePath);
+                factory.create_mesh(obj_path.c_str(), 160.0, onTexCoords, brain_texture_path,
+                                    position, eulers, zoom_factor, velocity, eulerVelocity);
                 mesh_created = true;
             }
 

@@ -24,9 +24,9 @@ public:
                      glm::vec3 size, const std::string &texture_path);
 
     void create_mesh(const char *obj_path, const float &scale,
-                     glm::vec3 position, glm::vec3 eulers,
-                     glm::vec3 velocity, glm::vec3 eulerVelocity,
-                     const bool &onTexCoords, const std::string &texture_path);
+                     const bool &onTexCoords, const std::string &texture_path,   // entity properties
+                     glm::vec3 position, glm::vec3 eulers, glm::f32 zoom_factor, // transform properties
+                     glm::vec3 velocity, glm::vec3 eulerVelocity);               // physics properties
 
 private:
     unsigned int EntityMade;

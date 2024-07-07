@@ -13,6 +13,8 @@
 #include "../components/physics_component.h"
 #include "../components/render_component.h"
 
+#include "../systems/render_system.h"
+
 class App
 {
 public:
@@ -27,7 +29,14 @@ public:
 
 private:
     GLFWwindow *window;
+    Shader *shader;
+
+    // Init functions
     void setup_glfw();
     void setup_opengl();
     void setup_imgui();
+    void setup_systems();
+
+    // Systems
+    RenderSystem *renderSystem;
 };
