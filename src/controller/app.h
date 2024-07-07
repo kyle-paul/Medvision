@@ -1,12 +1,17 @@
 #pragma once
 #include "../exlibs.h"
 #include "../renderer/shaders/shader.h"
-#include "../renderer/display/display.h"
 #include "../renderer/texture/texture.h"
 #include "../factory/factory.h"
+
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
+#include "imgui/imgui_internal.h"
+
+#include "../components/transform_component.h"
+#include "../components/physics_component.h"
+#include "../components/render_component.h"
 
 class App
 {
@@ -14,7 +19,11 @@ public:
     App();
     ~App();
     void run();
-    void run2();
+
+    // Components
+    std::unordered_map<unsigned int, TransformComponent> transform_components;
+    std::unordered_map<unsigned int, PhysicsComponent> physics_components;
+    std::unordered_map<unsigned int, RenderComponent> render_components;
 
 private:
     GLFWwindow *window;

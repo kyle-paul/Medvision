@@ -4,7 +4,7 @@
 
 int main()
 {
-    App *app = new App();
-    app->run();
+    App app;
+    app.run();
     return 0;
 }

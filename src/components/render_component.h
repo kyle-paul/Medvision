@@ -1,10 +1,9 @@
 #pragma once
 #include "../exlibs.h"
-#include "../standard.h"
 
-class RenderComponent
+struct RenderComponent
 {
-    unsigned int material;
-    unsigned int vao;
-    unsigned vertexCount;
+    Texture *texture;
+    VertexArray *vao;
+    IndexBuffer *fbo;
 };

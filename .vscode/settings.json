@@ -69,7 +69,12 @@
 		"numbers": "cpp",
 		"span": "cpp",
 		"cinttypes": "cpp",
-		"variant": "cpp"
+		"variant": "cpp",
+		"locale": "cpp",
+		"xlocbuf": "cpp",
+		"xlocmes": "cpp",
+		"xlocmon": "cpp",
+		"xloctime": "cpp"
 	},
 	"cmake.configureOnOpen": false
 }

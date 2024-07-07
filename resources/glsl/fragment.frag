@@ -5,7 +5,7 @@ in vec3 fragmentNormals;
 layout(location = 0) out vec4 texRender;
 
 uniform sampler2D ImageTexture;
-const vec3 sunDirection = normalize(vec3(-1.0, 1.0, 1.0));
+const vec3 sunDirection = normalize(vec3(-300.0, 300.0, 300.0));
 
 void main()
 {

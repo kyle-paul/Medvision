@@ -12,18 +12,12 @@ add_executable(Medvision
     src/controller/app.cpp
 
     src/renderer/shaders/shader.cpp
-    src/renderer/display/display.cpp
     src/renderer/texture/texture.cpp
     src/renderer/buffer/VertexArray.cpp
     src/renderer/buffer/VertexBuffer.cpp
     src/renderer/buffer/IndexBuffer.cpp
 
     src/factory/factory.cpp
-
-    src/components/render_component.cpp
-    src/components/physics_component.cpp
-    src/components/transform_component.cpp
-
     src/vendor/imgui/imgui_demo.cpp
     src/vendor/imgui/imgui_draw.cpp
     src/vendor/imgui/imgui_impl_glfw.cpp
