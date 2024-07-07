@@ -10,6 +10,7 @@
 #include "../components/transform_component.h"
 #include "../components/physics_component.h"
 #include "../components/render_component.h"
+#include "../components/object_component.h"
 
 class Factory
 {
@@ -23,10 +24,7 @@ public:
                      glm::vec3 &position, glm::vec3 &eulers, glm::f32 &zoom_factor, // transform properties
                      glm::vec3 &velocity, glm::vec3 &eulerVelocity);                // physics properties
 
-    void create_mesh(const char *obj_path, const float &scale,
-                     const bool &onTexCoords, const std::string &texture_path,      // entity properties
-                     glm::vec3 &position, glm::vec3 &eulers, glm::f32 &zoom_factor, // transform properties
-                     glm::vec3 &velocity, glm::vec3 &eulerVelocity);                // physics properties
+    void create_mesh(const objectInit &object);
 
 private:
     unsigned int EntityMade;

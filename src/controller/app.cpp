@@ -1,4 +1,5 @@
 #include "app.h"
+#include "stb_image/stb_image.h"
 
 App::App()
 {
@@ -33,6 +34,13 @@ void App::setup_glfw()
         std::cout << "Error initializing Glad" << std::endl;
         glfwTerminate();
     }
+
+    // Icon application
+    int width, height, nrChannels;
+    unsigned char *img = stbi_load("../resources/images/logo.png", &width, &height, &nrChannels, 4);
+    GLFWimage icon = {width, height, img};
+    glfwSetWindowIcon(window, 1, &icon);
+    stbi_image_free(img);
 
     // Shader uniform
     shader = new Shader("../resources/glsl/vertex.vert", "../resources/glsl/fragment.frag");
@@ -163,15 +171,53 @@ void App::run()
     Factory factory(transform_components, physics_components, render_components);
 
     // Entity configuration
-    std::string obj_path = "../resources/objs/brain/1.obj";
-    std::string brain_texture_path = "../resources/textures/brain2.jpg";
-    glm::vec3 position = {0.0f, 0.0f, 0.0f};
-    glm::vec3 eulers = {45.0f, 45.0f, 45.0f};
-    glm::vec3 velocity = {0.0f, 0.0f, 0.0f};
-    glm::vec3 eulerVelocity = {10.0f, 10.0f, 10.0f};
-    glm::vec3 size = {0.5f, 0.5f, 0.5f};
-    bool onTexCoords = true;
-    float zoom_factor = 1.5f;
+    std::string obj_name = "Cortical gray matter";
+    std::string obj_path = "../resources/objs/brain/case1/1.obj";
+    std::string brain_texture_path = "../resources/textures/brain1.jpg";
+    objectInit object(&obj_name, &obj_path, &brain_texture_path);
+    objectArrays[objectMade++] = object;
+
+    std::string obj_name2 = "Basal ganglia";
+    std::string obj_path2 = "../resources/objs/brain/case1/2.obj";
+    std::string brain_texture_path2 = "../resources/textures/brain2.jpg";
+    objectInit object2(&obj_name2, &obj_path2, &brain_texture_path2);
+    objectArrays[objectMade++] = object2;
+
+    std::string obj_name3 = "White matter";
+    std::string obj_path3 = "../resources/objs/brain/case1/3.obj";
+    std::string brain_texture_path3 = "../resources/textures/brain3.jpg";
+    objectInit object3(&obj_name3, &obj_path3, &brain_texture_path3);
+    objectArrays[objectMade++] = object3;
+
+    std::string obj_name4 = "White matter lesions";
+    std::string obj_path4 = "../resources/objs/brain/case1/4.obj";
+    std::string brain_texture_path4 = "../resources/textures/brain4.jpg";
+    objectInit object4(&obj_name4, &obj_path4, &brain_texture_path4);
+    objectArrays[objectMade++] = object4;
+
+    std::string obj_name5 = "Cerebrospinal fluid";
+    std::string obj_path5 = "../resources/objs/brain/case1/5.obj";
+    std::string brain_texture_path5 = "../resources/textures/brain5.jpg";
+    objectInit object5(&obj_name5, &obj_path5, &brain_texture_path5);
+    objectArrays[objectMade++] = object5;
+
+    std::string obj_name6 = "Ventricles";
+    std::string obj_path6 = "../resources/objs/brain/case1/6.obj";
+    std::string brain_texture_path6 = "../resources/textures/brain6.jpg";
+    objectInit object6(&obj_name6, &obj_path6, &brain_texture_path6);
+    objectArrays[objectMade++] = object6;
+
+    std::string obj_name7 = "Cerebellum";
+    std::string obj_path7 = "../resources/objs/brain/case1/7.obj";
+    std::string brain_texture_path7 = "../resources/textures/brain7.jpg";
+    objectInit object7(&obj_name7, &obj_path7, &brain_texture_path7);
+    objectArrays[objectMade++] = object7;
+
+    std::string obj_name8 = "Brainstem";
+    std::string obj_path8 = "../resources/objs/brain/case1/8.obj";
+    std::string brain_texture_path8 = "../resources/textures/brain8.jpg";
+    objectInit object8(&obj_name8, &obj_path8, &brain_texture_path8);
+    objectArrays[objectMade++] = object8;
 
     // ImGui config
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
@@ -236,25 +282,30 @@ void App::run()
             static float f = 0.0f;
             static int counter = 0;
 
-            ImGui::Begin("Transformation Panel");
+            ImGui::Begin(objectArrays[0].obj_name->c_str());
             ImGui::Text("3D reconstruction for better analysis");
             ImGui::Checkbox("Controlling Panel", &show_imgui);
             ImGui::Checkbox("Management Panel", &show_another_window);
 
             if (enable_transformation)
             {
-                ImGui::SliderFloat3("Translation", &position.x, -4.0f, 4.0f);
-                ImGui::SliderFloat3("Rotation", &eulers.x, 0.0f, 360.f);
-                // std::cout << &eulers << std::endl;
-                ImGui::SliderFloat("Zoom factor", &zoom_factor, 1.0f, 4.0f);
+                ImGui::SliderFloat3("Translation", &(*objectArrays[0].position).x, -4.0f, 4.0f);
+                ImGui::SliderFloat3("Rotation", &(*objectArrays[0].eulers).x, 0.0f, 360.f);
+                ImGui::SliderFloat("Zoom factor", objectArrays[0].zoom_factor, 1.0f, 4.0f);
                 ImGui::ColorEdit3("clear color", (float *)&clear_color);
-                ImGui::Checkbox("Turn on texture", &onTexCoords);
+                ImGui::Checkbox("Turn on texture", objectArrays[0].onTexCoords);
             }
 
             if (ImGui::Button("Start reconstruction"))
             {
-                factory.create_mesh(obj_path.c_str(), 160.0, onTexCoords, brain_texture_path,
-                                    position, eulers, zoom_factor, velocity, eulerVelocity);
+                factory.create_mesh(objectArrays[0]);
+                factory.create_mesh(objectArrays[1]);
+                factory.create_mesh(objectArrays[2]);
+                factory.create_mesh(objectArrays[3]);
+                factory.create_mesh(objectArrays[4]);
+                factory.create_mesh(objectArrays[5]);
+                factory.create_mesh(objectArrays[6]);
+                factory.create_mesh(objectArrays[7]);
                 mesh_created = true;
             }
 

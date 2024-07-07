@@ -7,7 +7,7 @@ Factory::Factory(std::unordered_map<unsigned int, TransformComponent> &transform
                                                                                          physics_components(physics_components),
                                                                                          render_components(render_components)
 {
-    EntityMade = 1;
+    EntityMade = 0;
 }
 
 Factory::~Factory()
@@ -31,25 +31,22 @@ std::vector<std::string> Factory::split(const std::string &line,
     return result;
 }
 
-void Factory::create_mesh(const char *obj_path, const float &scale,
-                          const bool &onTexCoords, const std::string &texture_path,      // entity properties
-                          glm::vec3 &position, glm::vec3 &eulers, glm::f32 &zoom_factor, // transform properties
-                          glm::vec3 &velocity, glm::vec3 &eulerVelocity)                 // physics properties
+void Factory::create_mesh(const objectInit &object)
 {
 
     TransformComponent transform;
-    transform.position = &position;
-    transform.eulers = &eulers;
-    transform.zoom_factor = &zoom_factor;
+    transform.position = object.position;
+    transform.eulers = object.eulers;
+    transform.zoom_factor = object.zoom_factor;
     transform_components[EntityMade] = transform;
 
     PhysicsComponent physics;
-    physics.velocity = &velocity;
-    physics.eulerVelocity = &eulerVelocity;
+    physics.velocity = object.velocity;
+    physics.eulerVelocity = object.eulerVelocity;
     physics_components[EntityMade] = physics;
 
-    RenderComponent render = make_mesh(obj_path, scale, onTexCoords);
-    render.texture = new Texture(texture_path);
+    RenderComponent render = make_mesh(object.obj_path->c_str(), *object.scale, *object.onTexCoords);
+    render.texture = new Texture(*object.texture_path);
     render_components[EntityMade++] = render;
 }
 
