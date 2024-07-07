@@ -3,7 +3,7 @@
 
 struct TransformComponent
 {
-    glm::vec3 position;
-    glm::vec3 eulers;
-    glm::f32 zoom_factor;
+    glm::vec3 *position;
+    glm::vec3 *eulers;
+    glm::f32 *zoom_factor;
 };

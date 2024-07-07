@@ -169,6 +169,7 @@ void App::run()
     glm::vec3 eulers = {45.0f, 45.0f, 45.0f};
     glm::vec3 velocity = {0.0f, 0.0f, 0.0f};
     glm::vec3 eulerVelocity = {10.0f, 10.0f, 10.0f};
+    glm::vec3 size = {0.5f, 0.5f, 0.5f};
     bool onTexCoords = true;
     float zoom_factor = 1.5f;
 
@@ -244,6 +245,7 @@ void App::run()
             {
                 ImGui::SliderFloat3("Translation", &position.x, -4.0f, 4.0f);
                 ImGui::SliderFloat3("Rotation", &eulers.x, 0.0f, 360.f);
+                // std::cout << &eulers << std::endl;
                 ImGui::SliderFloat("Zoom factor", &zoom_factor, 1.0f, 4.0f);
                 ImGui::ColorEdit3("clear color", (float *)&clear_color);
                 ImGui::Checkbox("Turn on texture", &onTexCoords);

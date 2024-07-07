@@ -32,20 +32,20 @@ std::vector<std::string> Factory::split(const std::string &line,
 }
 
 void Factory::create_mesh(const char *obj_path, const float &scale,
-                          const bool &onTexCoords, const std::string &texture_path,   // entity properties
-                          glm::vec3 position, glm::vec3 eulers, glm::f32 zoom_factor, // transform properties
-                          glm::vec3 velocity, glm::vec3 eulerVelocity)                // physics properties
+                          const bool &onTexCoords, const std::string &texture_path,      // entity properties
+                          glm::vec3 &position, glm::vec3 &eulers, glm::f32 &zoom_factor, // transform properties
+                          glm::vec3 &velocity, glm::vec3 &eulerVelocity)                 // physics properties
 {
 
     TransformComponent transform;
-    transform.position = position;
-    transform.eulers = eulers;
-    transform.zoom_factor = zoom_factor;
+    transform.position = &position;
+    transform.eulers = &eulers;
+    transform.zoom_factor = &zoom_factor;
     transform_components[EntityMade] = transform;
 
     PhysicsComponent physics;
-    physics.velocity = velocity;
-    physics.eulerVelocity = eulerVelocity;
+    physics.velocity = &velocity;
+    physics.eulerVelocity = &eulerVelocity;
     physics_components[EntityMade] = physics;
 
     RenderComponent render = make_mesh(obj_path, scale, onTexCoords);
@@ -137,19 +137,18 @@ RenderComponent Factory::make_mesh(const char *obj_path, const float &scale, con
     return render;
 }
 
-void Factory::create_cube(glm::vec3 position, glm::vec3 eulers,
-                          glm::vec3 velocity, glm::vec3 eulerVelocity,
-                          glm::vec3 size, const std::string &texture_path)
+void Factory::create_cube(glm::vec3 size, const std::string &texture_path,               // entity properties
+                          glm::vec3 &position, glm::vec3 &eulers, glm::f32 &zoom_factor, // transform properties
+                          glm::vec3 &velocity, glm::vec3 &eulerVelocity)                 // physics properties
 {
-
     TransformComponent transform;
-    transform.position = position;
-    transform.eulers = eulers;
+    transform.position = &position;
+    transform.eulers = &eulers;
     transform_components[EntityMade] = transform;
 
     PhysicsComponent physics;
-    physics.velocity = velocity;
-    physics.eulerVelocity = eulerVelocity;
+    physics.velocity = &velocity;
+    physics.eulerVelocity = &eulerVelocity;
     physics_components[EntityMade] = physics;
 
     RenderComponent render = make_cube(size);
@@ -208,6 +207,7 @@ RenderComponent Factory::make_cube(glm::vec3 &size)
         0, 7, 6};
 
     VertexArray *vao = new VertexArray();
+
     IndexBuffer *fbo = new IndexBuffer(faces);
 
     VertexBuffer *vbo = new VertexBuffer(positions);

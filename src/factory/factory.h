@@ -19,14 +19,14 @@ public:
             std::unordered_map<unsigned int, RenderComponent> &render_components);
     ~Factory();
 
-    void create_cube(glm::vec3 position, glm::vec3 eulers,
-                     glm::vec3 velocity, glm::vec3 eulerVelocity,
-                     glm::vec3 size, const std::string &texture_path);
+    void create_cube(glm::vec3 size, const std::string &texture_path,               // entity properties
+                     glm::vec3 &position, glm::vec3 &eulers, glm::f32 &zoom_factor, // transform properties
+                     glm::vec3 &velocity, glm::vec3 &eulerVelocity);                // physics properties
 
     void create_mesh(const char *obj_path, const float &scale,
-                     const bool &onTexCoords, const std::string &texture_path,   // entity properties
-                     glm::vec3 position, glm::vec3 eulers, glm::f32 zoom_factor, // transform properties
-                     glm::vec3 velocity, glm::vec3 eulerVelocity);               // physics properties
+                     const bool &onTexCoords, const std::string &texture_path,      // entity properties
+                     glm::vec3 &position, glm::vec3 &eulers, glm::f32 &zoom_factor, // transform properties
+                     glm::vec3 &velocity, glm::vec3 &eulerVelocity);                // physics properties
 
 private:
     unsigned int EntityMade;
